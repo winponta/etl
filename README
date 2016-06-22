@@ -1,4 +1,4 @@
-#. Winponta\ETL
+# Winponta\ETL
 
 This package is a bundle of helpers and traits to support ETL actvities in a DW, migration, 
 syncing environment of Laravel systems.
@@ -7,6 +7,6 @@ It's compatible with Laravel 5.2+ and is based on
 noSql databases. The first implementation is focused on MongoDB, 
 using [jenssegers/mongodb](https://github.com/jenssegers/laravel-mongodb) driver.
 
-##. Atention
+## Atention
 
 **WIP -- this project is in its early development, please come back in a few days**
