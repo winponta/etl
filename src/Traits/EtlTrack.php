@@ -16,7 +16,7 @@ trait EtlTrack {
         $data = array_merge([
             'status' => static::$ETL_STATUS_STARTED,
             'message' => 'JOB Started',
-            'at' => $this->asDateTime(\Carbon\Carbon::now()),
+            'at' => \Carbon\Carbon::now(),
         ], $data);
         
         $etl['context'] = $context;
@@ -39,7 +39,7 @@ trait EtlTrack {
         $data = array_merge([
             'status' => static::$ETL_STATUS_RUNNING,
             'message' => 'JOB Running',
-            'at' => $this->asDateTime(\Carbon\Carbon::now()),
+            'at' => \Carbon\Carbon::now(),
         ], $data);
         $track = $this->etlHistory->track;
         $track[] = $data;
@@ -51,7 +51,7 @@ trait EtlTrack {
         $data = array_merge([
             'status' => static::$ETL_STATUS_FINISHED,
             'message' => 'JOB Finished',
-            'at' => $this->asDateTime(\Carbon\Carbon::now()),
+            'at' => \Carbon\Carbon::now(),
         ], $data);
         $track = $this->etlHistory->track;
         $track[] = $data;
