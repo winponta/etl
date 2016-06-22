@@ -5,7 +5,7 @@ namespace Winponta\ETL\Traits;
 use MongoDB\BSON\ObjectID;
 use Winponta\ETL\Models\Jenssegers\Mongodb;
 
-trait EtlDocumentTrackTrait {
+trait EtlDocumentTrack {
 
     /**
      * 
