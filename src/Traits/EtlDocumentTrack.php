@@ -14,7 +14,7 @@ trait EtlDocumentTrack {
      * @return EmbedsOne
      */
     public function etl() {
-        return $this->embedsOne(\Winponta\ETL\Models\Etl::class);
+        return $this->embedsOne(\Winponta\ETL\Models\Jenssegers\Mongodb\Etl::class);
     }
     
     public function trackEtl($data = [], $history = true, $callSave = false) {
