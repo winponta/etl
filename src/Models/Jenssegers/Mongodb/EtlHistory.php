@@ -1,9 +1,8 @@
 <?php
 
-namespace Winponta\ETL\Models;
+namespace Winponta\ETL\Models\Jenssegers\Mongodb;
 
 use Jenssegers\Mongodb\Eloquent\Model;
-use Proplan\Smartboard\Server\Domain\ArchiverTrait;
 
 class EtlHistory extends Model {
     
