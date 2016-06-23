@@ -20,7 +20,7 @@ trait EtlDocumentTrack {
     public function trackEtl($data = [], $history = true, $callSave = false) {
         $data = array_merge(['action' => 'Record synced by ETL'], $data);
         
-        $etl = $this->etl ? $this->etl : new \Winponta\ETL\Models\Etl();
+        $etl = $this->etl ? $this->etl : new \Winponta\ETL\Models\Jenssegers\Mongodb\Etl();
 
         $etl->touch();
         
@@ -60,5 +60,24 @@ trait EtlDocumentTrack {
         return $this->embedsMany(EtlSource::class);
     }
     
+    public function saveEtlSource($model, $database, $table, $field, $value, $trackEtl = true) {
+        $sources = $this->etlSources;
 
+        if ($sources->where('database', $database)->where('table', $table)->first() == null) {
+            $src = new \Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource();
+            $src->model = $model;
+            $src->database = $database;
+            $src->table = $table;
+            $src->field = $field;
+            $src->value = $value;
+
+            $this->etlSources()->save($src);
+
+            if ($trackEtl) $this->trackEtl();
+            
+            $this->save();
+        }
+
+        return $this;
+    }
 }
