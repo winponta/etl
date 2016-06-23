@@ -29,7 +29,7 @@ trait EtlTrack {
         
         $etl['track'][] = $data;
 
-        $this->etlHistory = \Winponta\ETL\Models\EtlHistory::forceCreate($etl);
+        $this->etlHistory = \Winponta\ETL\Models\Jenssegers\Mongodb\EtlHistory::forceCreate($etl);
         
         return $this->etlHistory;
         
