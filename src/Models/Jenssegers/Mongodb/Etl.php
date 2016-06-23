@@ -1,6 +1,6 @@
 <?php
 
-namespace Winponta\ETL\Models;
+namespace Winponta\ETL\Models\Jenssegers\Mongodb;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
