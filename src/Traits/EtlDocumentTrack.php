@@ -38,7 +38,7 @@ trait EtlDocumentTrack {
         }
 
         if ($history && count($this->original) > 0) {
-            $history = new \Winponta\ETL\Models\EtlDocumentHistory();
+            $history = new \Winponta\ETL\Models\Jenssegers\Mongodb\EtlDocumentHistory();
             
             if (is_string($this->id) and strlen($this->id) === 24 and ctype_xdigit($this->id)) {
                 $history->document_id = new ObjectID($this->id);
