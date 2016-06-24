@@ -3,7 +3,6 @@
 namespace Winponta\ETL\Traits;
 
 use MongoDB\BSON\ObjectID;
-use Winponta\ETL\Models\Jenssegers\Mongodb;
 
 trait EtlDocumentTrack {
 
@@ -15,6 +14,16 @@ trait EtlDocumentTrack {
      */
     public function etl() {
         return $this->embedsOne(\Winponta\ETL\Models\Jenssegers\Mongodb\Etl::class);
+    }
+    
+    /**
+     * 
+     * Returns a embeds many relationship with Etl Source model
+     * 
+     * @return EmbedsOne
+     */
+    public function etlSources() {
+        return $this->embedsMany(\Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource::class);
     }
     
     public function trackEtl($data = [], $history = true, $callSave = false) {
@@ -54,10 +63,6 @@ trait EtlDocumentTrack {
                 ->where('etl_sources.field', $field)
                 ->where('etl_sources.value', $value)
                 ->first();
-    }
-    
-    public function etlSources() {
-        return $this->embedsMany(EtlSource::class);
     }
     
     public function saveEtlSource($model, $database, $table, $field, $value, $trackEtl = true) {
