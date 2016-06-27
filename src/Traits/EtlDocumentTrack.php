@@ -23,7 +23,11 @@ trait EtlDocumentTrack {
      * @return EmbedsOne
      */
     public function etlSources() {
-        return $this->embedsMany(\Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource::class);
+        $etlSources = new \Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource();
+        
+        return $this->embedsMany(\Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource::class, 
+                null, null, 
+                $etlSources->getTable());
     }
     
     public function trackEtl($data = [], $history = true, $callSave = false) {
@@ -58,17 +62,26 @@ trait EtlDocumentTrack {
     }
     
     public static function findByEtlSource($database, $table, $field, $value) {
-        return static::where('etl_sources.database', $database)
-                ->where('etl_sources.table', $table)
-                ->where('etl_sources.field', $field)
-                ->where('etl_sources.value', $value)
+        $relation = new \Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource();
+        
+        return static::where($relation->getTable() . '.database', $database)
+                ->where($relation->getTable() . '.table', $table)
+                ->where($relation->getTable() . '.field', $field)
+                ->where($relation->getTable() . '.value', $value)
                 ->first();
     }
     
     public function saveEtlSource($model, $database, $table, $field, $value, $trackEtl = true) {
         $sources = $this->etlSources;
 
-        if ($sources->where('database', $database)->where('table', $table)->first() == null) {
+        $sourceExist = FALSE;
+        foreach ($sources as $source) {
+            if ($source->database == $database && $source->table == $table) {
+                $sourceExist = TRUE;
+            }            
+        }
+        
+        if ($sourceExist == FALSE) {
             $src = new \Winponta\ETL\Models\Jenssegers\Mongodb\EtlSource();
             $src->model = $model;
             $src->database = $database;
@@ -79,7 +92,7 @@ trait EtlDocumentTrack {
             $this->etlSources()->save($src);
 
             if ($trackEtl) $this->trackEtl();
-            
+
             $this->save();
         }
 
